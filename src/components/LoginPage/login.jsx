@@ -1,24 +1,45 @@
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { Link } from "react-router-dom";
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom"
 
-const Login = () => {
-    return (
-        <div className="flex flex-col items-center">
-            <div className="flex flex-col items-center gap-y-4">
-                <div className="text-4xl font-semibold">Welcome to the KayaHealth Connect</div>
-                <div className="w-[500px]">Your health and safety are our top priorities. Your care team is here to help you navigate your care journey</div>
-            </div>
-            <div className="w-[512px] flex flex-col items-start gap-y-4 pt-10">
-                <Label className="font-semibold text-xl">Username</Label>
-                <Input />
-                <Label className="font-semibold text-xl">Password</Label>
-                <Input />
-                <Button className="w-full bg-[#1c91f2] hover:bg-[#1870b8]">Login</Button>
-            </div>
-            <Link to="/register" className="text-[#1c91f2] hover:underline pt-5">Register</Link>
+export default function Component() {
+  return (
+    <div className="flex items-center px-4">
+      <div className="mx-auto max-w-md w-full space-y-4">
+        <div className="space-y-2 text-center">
+          <p className="text-gray-500 text-2xl dark:text-gray-400">Sign in to your account</p>
         </div>
-    );
-};
-export default Login;
+        <div className="space-y-2">
+          <div className="space-y-2">
+            <Label htmlFor="username">Username</Label>
+            <Input id="username" placeholder="Username" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input id="password" placeholder="Password" required type="password" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="role">Role</Label>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="doctor">Doctor</SelectItem>
+                <SelectItem value="receptionist">Receptionist</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button className="w-full">Login</Button>
+        </div>
+        <div className="text-center text-sm">
+          <Link className="underline" href="#">
+            Forgot your password?
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
