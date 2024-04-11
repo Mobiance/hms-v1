@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Link } from "react-router-dom";
 
@@ -51,6 +51,23 @@ const PatientArray = [
 ];
 
 const PatientItem = () => {
+
+    const  [patients, setPatients]= useState([]);
+    async function getPatients() {
+        try {
+            const response = await fetch("http://localhost:3000/api/patients");
+        const data = await response.json();
+        setPatients(data.data)
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      
+    console.log(patients)
+      useEffect(() => {
+        getPatients()
+      }, [])
+      
     return (
         <div>
             <Table> 
@@ -67,20 +84,22 @@ const PatientItem = () => {
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
-                    {PatientArray.map(patient => (
-                        <TableRow key={patient.id}>
-                            <TableCell>{patient.id}</TableCell>
-                            <TableCell>{patient.name}</TableCell>
-                            <TableCell>{patient.dob}</TableCell>
-                            <TableCell>{patient.gender}</TableCell>
-                            <TableCell>{patient.contact}</TableCell>
-                            <TableCell>{patient.weight}</TableCell>
-                            <TableCell>{patient.age}</TableCell>
-                            <TableCell><Link to={`/patientinfo/${patient.id}`}>View</Link></TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
+               {
+                patients? <TableBody>
+                {patients&& patients.map(patient => (
+                    <TableRow key={patient._id}>
+                        <TableCell>{patient._id}</TableCell>
+                        <TableCell>{patient.name}</TableCell>
+                        <TableCell>{patient.Dob}</TableCell>
+                        <TableCell>{patient.gender}</TableCell>
+                        <TableCell>{patient.contactNumber}</TableCell>
+                        <TableCell>{patient.weight}</TableCell>
+                        <TableCell>{patient.age}</TableCell>
+                        <TableCell><Link to={`/patientinfo/${patient._id}`}>View</Link></TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>:<h3>Loading</h3>
+               }
             </Table>
         </div>
     );

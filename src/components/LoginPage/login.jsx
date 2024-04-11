@@ -39,6 +39,11 @@ export default function Component() {
             Forgot your password?
           </Link>
         </div>
+        <div className="text-center text-sm">
+          <Link to={'/register'} className="underline" href="#">
+            Don't have account, Sign up
+          </Link>
+        </div>
       </div>
     </div>
   )

@@ -42,15 +42,14 @@ export default function Component() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="doctor">Doctor</SelectItem>
-                <SelectItem value="nurse">Nurse</SelectItem>
-                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="nurse">Reciptionist</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <Button className="w-full">Register</Button>
         </div>
         <div className="text-center text-sm">
-          <Link className="underline" href="#">
+          <Link to={'/login'} className="underline" href="#">
             Already have an account? Sign in
           </Link>
         </div>
