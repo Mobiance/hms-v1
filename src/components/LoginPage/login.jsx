@@ -9,13 +9,43 @@ export default function Component() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
 
-  const handleLogin = () => {
-    // Here you can perform any actions you need with the form data
-    // For now, let's just log it to the console
-    console.log('Username:', username);
-    console.log('Password:', password);
-    console.log('Role:', role);
+  const handleCloseToast = () => {
+    setShowToast(false);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/users/login',
+        {
+          username,
+          password,
+          role,
+        },
+        {
+            withCredentials:true
+        }
+      );
+
+      if (response.status === 200) {
+        // Handle successful login (e.g., redirect to dashboard)
+        console.log('Login successful!', response); // Log response if needed
+        document.cookie= accessToken=+response.data.data.accessToken
+        setShowToast(true); // Show success toast
+      } else {
+        // Handle errors from backend
+        setErrorMessage(await response.text());
+        console.error('Login failed:', errorMessage);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setErrorMessage('An error occurred during login. Please try again.'); // Generic error message
+    }
   };
 
   return (
@@ -45,7 +75,7 @@ export default function Component() {
               </SelectContent>
             </Select>
           </div>
-          <Button className="w-full" onClick={handleLogin}>Login</Button>
+          <Button className="w-full" onClick={handleSubmit}>Login</Button>
         </div>
         
       </div>
