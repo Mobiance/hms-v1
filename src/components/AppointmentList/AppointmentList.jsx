@@ -154,7 +154,8 @@ export default function AppointmentList() {
   
 
   return (
-    <>
+    <div>
+      
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -280,6 +281,6 @@ export default function AppointmentList() {
           </form>
         </Box>
       </Modal>
-    </>
+    </div>
   );
 }

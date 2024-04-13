@@ -47,16 +47,7 @@ export default function Component() {
           </div>
           <Button className="w-full" onClick={handleLogin}>Login</Button>
         </div>
-        <div className="text-center text-sm">
-          <Link className="underline" to="#">
-            Forgot your password?
-          </Link>
-        </div>
-        <div className="text-center text-sm">
-          <Link to={'/register'} className="underline">
-            Don't have account, Sign up
-          </Link>
-        </div>
+        
       </div>
     </div>
   )

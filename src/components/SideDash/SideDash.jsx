@@ -200,7 +200,7 @@ export default function SideDash() {
         <List>
           <ListItem disablePadding sx={{ display: 'block' }}onClick={handleDrawerClose}>
             <ListItemButton component={Link}
-              to="/perscription"
+              to="/prescription"
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
