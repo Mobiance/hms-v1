@@ -53,21 +53,116 @@ const PatientArray = [
 const PatientItem = () => {
 
     const  [patients, setPatients]= useState([]);
-    async function getPatients() {
-        try {
-            const response = await fetch("http://localhost:3000/api/patients");
-        const data = await response.json();
-        setPatients(data.data)
+    // async function getPatients() {
+    //     try {
+    //         const response = await fetch("http://localhost:5000/api/patients");
+    //     const data = await response.json();
+    //     setPatients(data.data)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    //   }
+      useEffect(() => {
+        async function getPatients() {
+            try {
+                const response = await fetch("http://localhost:5000/api/patients");
+            const data = await response.json();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            setPatients(data.data)
         } catch (error) {
             console.log(error)
         }
-      }
-      
-    console.log(patients)
-      useEffect(() => {
-        getPatients()
-      }, [])
-      
+    }
+    getPatients()
+}, [])
+console.log(patients)
     return (
         <div>
             <Table> 
