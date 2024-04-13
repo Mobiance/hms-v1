@@ -6,32 +6,42 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 
 export default function Component() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
-  const [message, setMessage] = useState('');
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    role: '',
+  });
 
-  const handleSubmit = async () => {
+  const handleChange = (e) => {
+    const { name, value } = e.target.value;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/users/register', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, email, password, role })
+        body: JSON.stringify(userData),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        setMessage(data.message);
-        // Optionally, you can redirect the user to another page after successful registration
+        console.log('User data posted successfully');
+        setUserData({
+          username: '',
+          email: '',
+          password: '',
+          role: '',
+        });
       } else {
-        setMessage(data.error || 'Registration failed');
+        console.error('Failed to post user data');
       }
     } catch (error) {
-      setMessage('An error occurred. Please try again later.');
+      console.error('Error:', error);
     }
   };
 
@@ -44,19 +54,19 @@ export default function Component() {
         <div className="space-y-2">
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
-            <Input id="username" placeholder="John" required value={username} onChange={e => setUsername(e.target.value)} />
+            <Input id="username" placeholder="John" required value={userData.username} onChange={e => handleChange(e)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" placeholder="johndoe@example.com" required type="email" value={email} onChange={e => setEmail(e.target.value)} />
+            <Input id="email" placeholder="johndoe@example.com" required type="email" value={userData.email} onChange={e => handleChange(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" placeholder="Password" required type="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <Input id="password" placeholder="Password" required type="password" value={userData.password} onChange={e => handleChange(e.target.value)} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="role">Roles</Label>
-            <Select>
+            {/* <Label htmlFor="role">Roles</Label> */}
+            {/* <Select>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
@@ -64,7 +74,11 @@ export default function Component() {
                 <SelectItem value="doctor">Doctor</SelectItem>
                 <SelectItem value="Receptionist">Receptionist</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
+            <div className="space-y-2">
+            <Label htmlFor="password">role</Label>
+            <Input id="role" placeholder="role" required type="text" value={userData.role} onChange={e => handleChange(e.target.value)} />
+          </div>
           </div>
           <Button className="w-full" onClick={handleSubmit}>Register</Button>
         </div>
@@ -73,7 +87,6 @@ export default function Component() {
             Already have an account? Sign in
           </Link>
         </div>
-        {message && <p className="text-center">{message}</p>}
       </div>
     </div>
   )
