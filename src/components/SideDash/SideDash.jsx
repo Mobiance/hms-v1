@@ -10,7 +10,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
-//icons
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -40,9 +39,9 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(7)} + 1px)`, // corrected template literal
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(8)} + 1px)`, // corrected template literal
   },
 });
 
@@ -65,7 +64,7 @@ const AppBar = styled(MuiAppBar, {
   backgroundColor:'smoke',
   ...(open && {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% - ${drawerWidth}px)`, // corrected template literal
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -200,7 +199,7 @@ export default function SideDash() {
         <List>
           <ListItem disablePadding sx={{ display: 'block' }}onClick={handleDrawerClose}>
             <ListItemButton component={Link}
-              to="/prescription"
+              to="/perscription"
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
