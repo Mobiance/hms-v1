@@ -9,6 +9,7 @@ import PatientInfoPage from './pages/patient-info-page';
 import AppointmentPage from './pages/appointment-page';
 import PrescriptionPage from './pages/prescription-page';
 import DashboardPage from './pages/dashboard-page';
+import SideDash from './components/SideDash/SideDash';
 
 
 function App() {
