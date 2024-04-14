@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import { Link, redirect } from "react-router-dom"
 
 export default function Component() {
     const [username, setUsername] = useState('');
@@ -37,7 +37,7 @@ export default function Component() {
                 console.log('Login successful!', response); // Log response if needed
                 document.cookie = accessToken = +response.data.data.accessToken
                 setShowToast(true); // Show success toast
-                history.push('/dashboard')
+                redirect('/dashboard'); // Redirect to dashboard
             } else {
                 // Handle errors from backend
                 setErrorMessage(await response.text());

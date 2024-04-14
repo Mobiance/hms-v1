@@ -7,6 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { Snackbar, Alert } from '@mui/material'; // For toast notifications
 import axios from 'axios'; // Import axios
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage2() {
   const [username, setUsername] = useState('');
@@ -14,6 +15,7 @@ function LoginPage2() {
   const [role, setRole] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); // State for error message
+    const navigator = useNavigate();
 
   const handleCloseToast = () => {
     setShowToast(false);

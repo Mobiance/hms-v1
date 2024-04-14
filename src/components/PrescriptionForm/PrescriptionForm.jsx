@@ -33,7 +33,7 @@ const PrescriptionForm = () => {
   };
 
   return (
-    <div className="prescription-form-container">
+    <div className="prescription-form-container bg-white">
       <h2 style={{ color: '#008DDA' }}>Prescription Form</h2>
       <div>
         <TextField
