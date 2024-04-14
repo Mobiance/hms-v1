@@ -10,6 +10,7 @@ import AppointmentPage from './pages/appointment-page';
 import PrescriptionPage from './pages/prescription-page';
 import DashboardPage from './pages/dashboard-page';
 import SideDash from './components/SideDash/SideDash';
+import LoginPage from './pages/login-page';
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/login" element={<LoginPage2/>} />
+                <Route path="/login" element={<LoginPage/>} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/patients" element={<PatientPage />} />
                 <Route path="/patientinfo/:id" element={<PatientInfoPage />} />

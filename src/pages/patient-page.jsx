@@ -7,7 +7,6 @@ import Navbar from "@/components/navbar";
 export default function PatientPage () {
   return (
     <div>
-      
       <SideDash />
       <div className="pt-[40px] px-[120px] pb-10">
         <PatientHero />

@@ -1,53 +1,53 @@
 import React, { useState } from 'react';
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
+import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select, SelectGroup } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Link, redirect } from "react-router-dom"
+import axios from 'axios';
 
-export default function Component() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    const [showToast, setShowToast] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(''); // State for error message
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
+  const handleCloseToast = () => {
+    setShowToast(false);
+  };
 
-    const handleCloseToast = () => {
-        setShowToast(false);
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        try {
-            const response = await axios.post(
-                'http://localhost:5000/api/users/login',
-                {
-                    username,
-                    password,
-                    role,
-                },
-                {
-                    withCredentials: true
-                }
-            );
-
-            if (response.status === 200) {
-                // Handle successful login (e.g., redirect to dashboard)
-                console.log('Login successful!', response); // Log response if needed
-                document.cookie = accessToken = +response.data.data.accessToken
-                setShowToast(true); // Show success toast
-                redirect('/dashboard'); // Redirect to dashboard
-            } else {
-                // Handle errors from backend
-                setErrorMessage(await response.text());
-                console.error('Login failed:', errorMessage);
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-            setErrorMessage('An error occurred during login. Please try again.'); // Generic error message
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/users/login',
+        {
+          username,
+          password,
+          role,
+        },
+        {
+            withCredentials:true
         }
-    };
+      );
+
+      if (response.status === 200) {
+        // Handle successful login (e.g., redirect to dashboard)
+        console.log('Login successful!', response); // Log response if needed
+        document.cookie= accessToken=+response.data.data.accessToken
+        setShowToast(true); // Show success toast
+      } else {
+        // Handle errors from backend
+        setErrorMessage(await response.text());
+        console.error('Login failed:', errorMessage);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setErrorMessage('An error occurred during login. Please try again.'); // Generic error message
+    }
+  };
+
 
     return (
         <div className="flex items-center px-4">
@@ -66,13 +66,15 @@ export default function Component() {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="role">Role</Label>
-                        <Select value={role} onChange={(e) => setRole(e.target.value)}>
+                        <Select onValueChange={setRole} >
                             <SelectTrigger>
                                 <SelectValue placeholder="Select a role" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="doctor">Doctor</SelectItem>
-                                <SelectItem value="receptionist">Receptionist</SelectItem>
+                                <SelectGroup label="Roles">
+                                    <SelectItem value="Doctor">Doctor</SelectItem>
+                                    <SelectItem value="Receptionist">Receptionist</SelectItem>
+                                </SelectGroup>
                             </SelectContent>
                         </Select>
                     </div>
@@ -83,3 +85,4 @@ export default function Component() {
         </div>
     )
 }
+export default Login;
