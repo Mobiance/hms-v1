@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select, SelectGroup } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Link, redirect } from "react-router-dom"
+import {Navigate,useNavigate} from "react-router-dom"
 import axios from 'axios';
 
 const Login = () => {
@@ -12,6 +13,7 @@ const Login = () => {
   const [role, setRole] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); // State for error message
+  const navigate = useNavigate();
   const handleCloseToast = () => {
     setShowToast(false);
   };
@@ -33,11 +35,11 @@ const Login = () => {
       );
 
       if (response.status === 200) {
-        // Handle successful login (e.g., redirect to dashboard)
+        navigate("/dashboard")
         console.log('Login successful!', response); // Log response if needed
-        document.cookie= accessToken=+response.data.data.accessToken
         setShowToast(true); // Show success toast
       } else {
+        
         // Handle errors from backend
         setErrorMessage(await response.text());
         console.error('Login failed:', errorMessage);
