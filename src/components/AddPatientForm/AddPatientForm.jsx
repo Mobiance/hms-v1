@@ -102,7 +102,7 @@ const AddPatientForm = () => {
   };
 
   return (
-    <FormContainer>
+    <FormContainer className='bg-white'>
       <FormWrapper>
         <FormTitle>Add New Patient</FormTitle>
         <form onSubmit={handleSubmit}>
