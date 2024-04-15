@@ -4,7 +4,7 @@ import Footer from '../components/LandingPage/footer';
 import Navbar from '../components/navbar';
 export default function LandingPage() {
   return (
-    <div>
+    <div className='w-full'>
       <Navbar />
       <div className="pt-[40px] px-[120px] pb-10">
         <Banner />

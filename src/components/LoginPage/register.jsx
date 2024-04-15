@@ -1,93 +1,92 @@
 import React, { useState } from 'react';
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
+import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select, SelectGroup } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import { Link, redirect } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
+import axios from 'axios';
 
-export default function Component() {
-  const [userData, setUserData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    role: '',
-  });
+const Register = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [role, setRole] = useState('');
+    const [showToast, setShowToast] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(''); // State for error message
+    const navigate = useNavigate();
+    const handleCloseToast = () => {
+        setShowToast(false);
+    };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target.value;
-    setUserData({ ...userData, [name]: value });
-  };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+        try {
+            const response = await axios.post(
+                'http://localhost:5000/api/users/register',
+                {
+                    username,
+                    email,
+                    password,
+                    role,
+                },
+                {
+                    withCredentials: true
+                }
+            );
 
-      if (response.ok) {
-        console.log('User data posted successfully');
-        setUserData({
-          username: '',
-          email: '',
-          password: '',
-          role: '',
-        });
-      } else {
-        console.error('Failed to post user data');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  return (
-    <div className="flex items-center px-4">
-      <div className="mx-auto max-w-md w-full space-y-4">
-        <div className="space-y-2 text-center">
-          <p className="text-gray-500 text-2xl dark:text-gray-400">Register for an account</p>
+            if (response.status === 200) {
+                // Handle successful login (e.g., redirect to dashboard)
+                console.log('Register successful!', response); // Log response if needed
+                document.cookie = accessToken = +response.data.data.accessToken
+                setShowToast(true); // Show success toast
+            } else {
+                // Handle errors from backend
+                console.error('Register failed:', errorMessage);
+            }
+        } catch (error) {
+            console.error('Error during registration:', error);
+            setErrorMessage('An error occurred during registeration. Please try again.'); // Generic error message
+        }
+    };
+    return (
+        <div className="flex items-center px-4">
+            <div className="mx-auto max-w-md w-full space-y-4">
+                <div className="space-y-2 text-center">
+                    <p className="text-gray-500 text-2xl dark:text-gray-400">Register a new Account</p>
+                </div>
+                <div className="space-y-2">
+                    <div className="space-y-2">
+                        <Label htmlFor="username">Username</Label>
+                        <Input id="username" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="email">Email</Label>
+                        <Input id="email" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="password">Password</Label>
+                        <Input id="password" placeholder="Password" required type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="role">Role</Label>
+                        <Select onValueChange={setRole} >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select a role" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup label="Roles">
+                                    <SelectItem value="Doctor">Doctor</SelectItem>
+                                    <SelectItem value="Receptionist">Receptionist</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <Button className="w-full" onClick={handleSubmit}>Login</Button>
+                </div>
+            </div>
         </div>
-        <div className="space-y-2">
-          <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
-            <Input id="username" placeholder="John" required value={userData.username} onChange={e => handleChange(e)} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" placeholder="johndoe@example.com" required type="email" value={userData.email} onChange={e => handleChange(e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" placeholder="Password" required type="password" value={userData.password} onChange={e => handleChange(e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            {/* <Label htmlFor="role">Roles</Label> */}
-            {/* <Select>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="doctor">Doctor</SelectItem>
-                <SelectItem value="Receptionist">Receptionist</SelectItem>
-              </SelectContent>
-            </Select> */}
-            <div className="space-y-2">
-            <Label htmlFor="password">role</Label>
-            <Input id="role" placeholder="role" required type="text" value={userData.role} onChange={e => handleChange(e.target.value)} />
-          </div>
-          </div>
-          <Button className="w-full" onClick={handleSubmit}>Register</Button>
-        </div>
-        <div className="text-center text-sm">
-          <Link to={'/login'} className="underline">
-            Already have an account? Sign in
-          </Link>
-        </div>
-      </div>
-    </div>
-  )
+    )
 }
+export default Register;

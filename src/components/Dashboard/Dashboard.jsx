@@ -48,7 +48,7 @@ export default function Dashboard() {
               theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
-            width: '100vw',
+            width: '150vw',
             overflow: 'auto',
           
           }}
